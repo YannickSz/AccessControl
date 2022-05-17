@@ -12,16 +12,16 @@ offset_left=0, offset_top=0 )
 
 
 if sys.argv[1]=='success':
-    image = Image.open("success.png")
+    image = Image.open("images/success.png")
 
 elif sys.argv[1]=='denied':
-    image = Image.open("denied.png")
+    image = Image.open("images/denied.png")
 
 elif sys.argv[1]=='loading':
-    image = Image.open("loading.png")
+    image = Image.open("images/loading.png")
 
 else:
-    image = Image.open("error.png")
+    image = Image.open("images/error.png")
 
 
 display.display(image)
