@@ -6,9 +6,7 @@ import sys
 import time
 
 
-display = ST7735.ST7735(port=1, cs=0, dc=23, backlight=None, 
-rst=16, width=128, height=160, rotation=0, invert=False, 
-offset_left=0, offset_top=0 )
+display = ST7735.ST7735(port=1, cs=0, dc=23, backlight=None, rst=16, width=128, height=160, rotation=0, invert=False, offset_left=0, offset_top=0 )
 
 
 if sys.argv[1]=='success':
