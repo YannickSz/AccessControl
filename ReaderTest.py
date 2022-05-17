@@ -2,6 +2,7 @@ import os
 from pirc522 import RFID
 
 rdr = RFID()
+mac = os.system('cat /sys/class/net/eth0/address')
 
 while True:
   os.system('python3 DisplayImage.py loading')
