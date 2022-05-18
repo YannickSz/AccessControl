@@ -21,20 +21,17 @@ while True:
     if not error:
       print("UID: " + str(uid))
       response = requests.post(url, data = json.dumps({"rfid":str(uid), "macAddress":str(mac)}), headers = headers)
-      print(response.text)
-      print(response.status_code)
-      print(mac)
-      print(uid)
       if response.status_code == 200:
         os.system('python3 DisplayImage.py success')
-
-        if isLoggedIn:
-          os.system('python3 Display.py Welcome ' + response.text)
-        else:
-          os.system('python3 Display.py Goodbye ' + response.text)
+        if response.json().get("message") == "Login":
+          os.system('python3 Display.py Welcome ' + response.json().get("user"))
+        elif response.json().get("message") == "Logout":
+          os.system('python3 Display.py Goodbye ' + response.json().get("user"))
 
       elif response.status_code == 403: 
         os.system('python3 DisplayImage.py denied')
+      elif response.status_code == 409:
+        os.system('python3 Display.py woanders eingeloggt')
       else:
         os.system('python3 DisplayImage.py error')
 
