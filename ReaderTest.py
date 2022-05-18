@@ -33,9 +33,10 @@ while True:
         else:
           os.system('python3 Display.py Goodbye Serdar')
 
-      else: 
+      elif response.status_code == 403: 
         os.system('python3 DisplayImage.py denied')
-
+      else:
+        os.system('python3 DisplayImage.py error')
 
 # Calls GPIO cleanup
 rdr.cleanup()
