@@ -31,4 +31,4 @@ elif sys.argv[1] == 'text':
     font=ImageFont.truetype("codec.ttf", 25), fill=(255, 255, 255))
     display.display(image)
 
-time.sleep(1)
+time.sleep(2)
