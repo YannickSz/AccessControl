@@ -29,9 +29,9 @@ while True:
         os.system('python3 DisplayImage.py success')
 
         if isLoggedIn:
-          os.system('python3 Display.py Welcome Serdar')
+          os.system('python3 Display.py Welcome ' + response.text)
         else:
-          os.system('python3 Display.py Goodbye Serdar')
+          os.system('python3 Display.py Goodbye ' + response.text)
 
       elif response.status_code == 403: 
         os.system('python3 DisplayImage.py denied')
