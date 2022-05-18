@@ -6,7 +6,7 @@ import json
 rdr = RFID()
 url = "http://pumpkin.international:8080/login"
 headers = {'Content-Type': 'application/json'}
-mac = os.popen('cat /sys/class/net/eth0/address').read()
+mac = os.popen('cat /sys/class/net/eth0/address').read().replace("\n", "")
 isLoggedIn = True
 
 while True:
@@ -20,8 +20,8 @@ while True:
 
     if not error:
       print("UID: " + str(uid))
-      response = requests.post(url, data = json.dumps({'rfid':str(uid), 'macAddress':str(mac).replace("\n","")}), headers = headers)
-      print(response.content)
+      response = requests.post(url, data = json.dumps({"rfid":str(uid), "macAddress":str(mac)}), headers = headers)
+      print(response.text)
       print(response.status_code)
       print(mac)
       print(uid)
