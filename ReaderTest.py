@@ -21,6 +21,7 @@ while True:
     if not error:
       print("UID: " + str(uid))
       response = requests.post(url, data = json.dumps({"rfid":str(uid), "macAddress":str(mac)}), headers = headers)
+
       if response.status_code == 200:
         os.system('python3 DisplayImage.py success')
         if response.json().get("message") == "Login":
@@ -31,7 +32,7 @@ while True:
       elif response.status_code == 403: 
         os.system('python3 DisplayImage.py denied')
       elif response.status_code == 409:
-        os.system('python3 Display.py woanders eingeloggt')
+        os.system('python3 Display.py LoggedIn elsewhere')
       else:
         os.system('python3 DisplayImage.py error')
 
