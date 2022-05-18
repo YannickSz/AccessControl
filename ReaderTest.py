@@ -1,5 +1,5 @@
-import os
 from pirc522 import RFID
+import os
 import requests
 import json
 
@@ -32,7 +32,7 @@ while True:
           os.system('python3 Display.py Welcome Serdar')
         else:
           os.system('python3 Display.py Goodbye Serdar')
-          
+
       else: 
         os.system('python3 DisplayImage.py denied')
 
