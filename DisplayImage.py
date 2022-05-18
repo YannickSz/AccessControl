@@ -11,13 +11,10 @@ display = ST7735.ST7735(port=1, cs=0, dc=23, backlight=None, rst=16, width=128, 
 
 if sys.argv[1]=='success':
     image = Image.open("images/success.png")
-
 elif sys.argv[1]=='denied':
     image = Image.open("images/denied.png")
-
 elif sys.argv[1]=='loading':
     image = Image.open("images/loading.png")
-
 else:
     image = Image.open("images/error.png")
 

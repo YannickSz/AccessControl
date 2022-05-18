@@ -19,10 +19,10 @@ if len(sys.argv) < 2:
     sys.exit()
 
 
-draw.text((4, 30), "Welcome",
+draw.text((4, 30), sys.argv[1],
 font=ImageFont.truetype("codec.ttf", 25), fill=(255, 255, 255))
 
 
-draw.text((4, 90), sys.argv[1]+'!',
+draw.text((4, 90), sys.argv[2]+'!',
 font=ImageFont.truetype("codec.ttf", 25), fill=(255, 255, 255))
 display.display(image)

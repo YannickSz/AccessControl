@@ -6,6 +6,7 @@ rdr = RFID()
 url = "http://pumpkin.international:8080/login"
 headers = {'Content-Type': 'application/json'}
 mac = os.popen('cat /sys/class/net/eth0/address').read()
+isLoggedIn = True
 
 while True:
   os.system('python3 DisplayImage.py loading')
@@ -24,7 +25,12 @@ while True:
       print(uid)
       if response.status_code == 200:
         os.system('python3 DisplayImage.py success')
-        os.system('python3 Display.py Serdar')
+
+        if isLoggedIn:
+          os.system('python3 Display.py Welcome Serdar')
+        else:
+          os.system('python3 Display.py Goodbye Serdar')
+          
       else: 
         os.system('python3 DisplayImage.py denied')
 
