@@ -1,6 +1,7 @@
-import os
 from pirc522 import RFID
+import os
 import requests
+import json
 
 rdr = RFID()
 url = "http://pumpkin.international:8080/login"
@@ -19,7 +20,7 @@ while True:
 
     if not error:
       print("UID: " + str(uid))
-      response = requests.post(url, data = {'rfid':uid, 'macAddress':mac}, headers = headers)
+      response = requests.post(url, data = json.dumps({'rfid':uid, 'macAddress':mac}), headers = headers)
       print(response.status_code)
       print(mac)
       print(uid)
@@ -30,7 +31,7 @@ while True:
           os.system('python3 Display.py Welcome Serdar')
         else:
           os.system('python3 Display.py Goodbye Serdar')
-          
+
       else: 
         os.system('python3 DisplayImage.py denied')
 
