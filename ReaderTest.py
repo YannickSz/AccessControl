@@ -20,7 +20,8 @@ while True:
 
     if not error:
       print("UID: " + str(uid))
-      response = requests.post(url, data = json.dumps({'rfid':uid, 'macAddress':mac}), headers = headers)
+      response = requests.post(url, data = json.dumps({'rfid':str(uid), 'macAddress':str(mac).replace("\n","")}), headers = headers)
+      print(response.content)
       print(response.status_code)
       print(mac)
       print(uid)
