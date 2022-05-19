@@ -8,6 +8,7 @@ rdr = RFID()
 url = "http://pumpkin.international:8080/login"
 headers = {'Content-Type': 'application/json'}
 mac = os.popen('cat /sys/class/net/eth0/address').read().replace("\n", "")
+users = {}
 
 while True:
   os.system('python3 Display.py image loading')
@@ -23,11 +24,18 @@ while True:
       response = requests.post(url, data = json.dumps({"rfid":str(uid), "macAddress":str(mac)}), headers = headers)
 
       if response.status_code == 200:
-        os.system('python3 Display.py image success')
+        
         if response.json().get("message") == "Login":
+          os.system('python3 Display.py image success')
           os.system('python3 Display.py text Welcome ' + response.json().get("user"))
-        elif response.json().get("message") == "Logout":
-          os.system('python3 Display.py text Goodbye ' + response.json().get("user"))
+          users = {str(uid): time.time()}
+        elif (response.json().get("message") == "Logout"):
+          timestamp = time.time()
+          if ((timestamp - users[str(uid)]) >= 30):
+            os.system('python3 Display.py image success')
+            os.system('python3 Display.py text Goodbye ' + response.json().get("user"))
+          else:
+            os.system('python3 Display.py text Wait ' + str((timestamp - users[str(uid)])) + "s")
 
       elif response.status_code == 403: 
         os.system('python3 Display.py image denied')
