@@ -14,7 +14,4 @@ else
     chmod -v 777 "/var/spool/cron/crontabs/$logname"
 
     echo "*/5 * * * * $path/Temperature.sh" >> "/var/spool/cron/crontabs/$logname"
-
-    chmod -v 600 "/var/spool/cron/crontabs/$logname"
-    chmod -v 730 "/var/spool/cron/crontabs/"
 fi
