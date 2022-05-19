@@ -3,7 +3,9 @@
 logname=$(logname)
 path=$(pwd)
 
-crontab -l 2>/dev/null
+if [ ! -e "/var/spool/cron/crontabs/$logname" ] ; then
+    echo "" > "/var/spool/cron/crontabs/$logname"
+fi
 
 if grep -q "$path/Temperature.sh" "/var/spool/cron/crontabs/$logname"
 then
@@ -13,5 +15,6 @@ else
     chmod -v 777 "/var/spool/cron/crontabs/"
     chmod -v 777 "/var/spool/cron/crontabs/$logname"
 
+    echo "" >> "/var/spool/cron/crontabs/$logname"
     echo "*/5 * * * * $path/Temperature.sh" >> "/var/spool/cron/crontabs/$logname"
 fi
