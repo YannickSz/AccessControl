@@ -28,14 +28,18 @@ while True:
         if response.json().get("message") == "Login":
           os.system('python3 Display.py image success')
           os.system('python3 Display.py text Welcome ' + response.json().get("user"))
-          users = {str(uid): time.time()}
+          users = {str(uid): int(time.time())}
+          print(users)
         elif (response.json().get("message") == "Logout"):
-          timestamp = time.time()
-          if ((timestamp - users[str(uid)]) >= 30):
+          timestamp = int(time.time())
+          print(users)
+          
+          if (timestamp - users[str(uid)]) >= 30:
             os.system('python3 Display.py image success')
             os.system('python3 Display.py text Goodbye ' + response.json().get("user"))
           else:
-            os.system('python3 Display.py text Wait ' + str((timestamp - users[str(uid)])) + "s")
+            os.system('python3 Display.py text Wait ' + str(30 - (timestamp - users[str(uid)])) + 's')
+            print(str(30 - (timestamp - users[str(uid)])))
 
       elif response.status_code == 403: 
         os.system('python3 Display.py image denied')
