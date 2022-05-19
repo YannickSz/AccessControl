@@ -2,13 +2,14 @@ from pirc522 import RFID
 import os
 import requests
 import json
-import time
+import datetime
 
 rdr = RFID()
-url = "http://pumpkin.international:8080/login"
+urlLogin = "http://pumpkin.international:8080/login"
+urlIsLoggedIn = "http://pumpkin.international:8080/isLoggedIn"
 headers = {'Content-Type': 'application/json'}
 mac = os.popen('cat /sys/class/net/eth0/address').read().replace("\n", "")
-users = {}
+format = '%Y-%m-%d %H:%M:%S'
 
 while True:
   os.system('python3 Display.py image loading')
@@ -21,25 +22,25 @@ while True:
 
     if not error:
       print("UID: " + str(uid))
-      response = requests.post(url, data = json.dumps({"rfid":str(uid), "macAddress":str(mac)}), headers = headers)
-
-      if response.status_code == 200:
-        
-        if response.json().get("message") == "Login":
-          os.system('python3 Display.py image success')
-          os.system('python3 Display.py text Welcome ' + response.json().get("user"))
-          users = {str(uid): int(time.time())}
-          print(users)
-        elif (response.json().get("message") == "Logout"):
-          timestamp = int(time.time())
-          print(users)
-          
-          if (timestamp - users[str(uid)]) >= 30:
+      response = requests.get(urlIsLoggedIn, data = json.dumps({"rfid":str(uid)}), headers = headers)
+      if response.json().get("loggedIn") == False:
+        response = requests.post(urlLogin, data = json.dumps({"rfid":str(uid), "macAddress":str(mac)}), headers = headers)
+        if response.status_code == 200:
+          if response.json().get("message") == "Login":
             os.system('python3 Display.py image success')
-            os.system('python3 Display.py text Goodbye ' + response.json().get("user"))
-          else:
-            os.system('python3 Display.py text Wait ' + str(30 - (timestamp - users[str(uid)])) + 's')
-            print(str(30 - (timestamp - users[str(uid)])))
+            os.system('python3 Display.py text Welcome ' + response.json().get("user"))
+
+
+      elif response.json().get("loggedIn") == True:
+        time = datetime.datetime.strptime(response.json().get("lastLogin"), format)
+        delta = datetime.datetime.now() - time
+        seconds = int(delta.total_seconds())
+        if seconds >= 30:
+          response = requests.post(urlLogin, data = json.dumps({"rfid":str(uid), "macAddress":str(mac)}), headers = headers)
+          os.system('python3 Display.py image success')
+          os.system('python3 Display.py text Goodbye ' + response.json().get("user"))
+        else:
+          os.system('python3 Display.py text Wait ' + str(30 - seconds) + 's')
 
       elif response.status_code == 403: 
         os.system('python3 Display.py image denied')

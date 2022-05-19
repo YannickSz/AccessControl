@@ -25,10 +25,10 @@ elif sys.argv[1] == 'text':
     draw = ImageDraw.Draw(image)
     
     draw.text((4, 30), sys.argv[2],
-    font=ImageFont.truetype("codec.ttf", 25), fill=(255, 255, 255))
+    font=ImageFont.truetype("cooper.otf", 25), fill=(255, 255, 255))
 
     draw.text((4, 90), sys.argv[3]+'!',
-    font=ImageFont.truetype("codec.ttf", 25), fill=(255, 255, 255))
+    font=ImageFont.truetype("cooper.otf", 25), fill=(255, 255, 255))
     display.display(image)
 
 time.sleep(2)
