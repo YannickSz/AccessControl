@@ -2,12 +2,12 @@ from pirc522 import RFID
 import os
 import requests
 import json
+import time
 
 rdr = RFID()
 url = "http://pumpkin.international:8080/login"
 headers = {'Content-Type': 'application/json'}
 mac = os.popen('cat /sys/class/net/eth0/address').read().replace("\n", "")
-isLoggedIn = True
 
 while True:
   os.system('python3 Display.py image loading')
