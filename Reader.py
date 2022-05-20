@@ -36,7 +36,10 @@ while True:
 
     if not error:
       print("UID: " + str(uid))
-      response = requests.get(urlIsLoggedIn, data = json.dumps({"rfid":str(uid)}), headers = headers)
+      try:
+        response = requests.get(urlIsLoggedIn, data = json.dumps({"rfid":str(uid)}), headers = headers)
+      except requests.exceptions.ConnectionError:
+        os.system('python3 Display.py text Server Offline')
       if response.json().get("loggedIn") == True:
         time = datetime.datetime.strptime(response.json().get("lastLogin"), format)
         delta = datetime.datetime.now() - time
