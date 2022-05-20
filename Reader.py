@@ -5,6 +5,7 @@ import json
 import datetime
 import pigpio
 import time as t
+import simplejson
 
 rdr = RFID()
 urlLogin = "http://pumpkin.international:8080/login"
@@ -38,8 +39,13 @@ while True:
       print("UID: " + str(uid))
       try:
         response = requests.get(urlIsLoggedIn, data = json.dumps({"rfid":str(uid)}), headers = headers)
+        response.json() 
       except requests.exceptions.ConnectionError:
         os.system('python3 Display.py text Server Offline')
+        continue
+      except simplejson.errors.JSONDecodeError:
+        os.system('python3 Display.py image denied')
+        continue
       if response.json().get("loggedIn") == True:
         time = datetime.datetime.strptime(response.json().get("lastLogin"), format)
         delta = datetime.datetime.now() - time
