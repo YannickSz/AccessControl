@@ -17,7 +17,7 @@ pi = pigpio.pi()
 # gpio 13 left
 # gpio 19 right
 def wantToLogOut():
-  os.system('python3 Display.py text Goodbye Goodbye')
+  os.system('python3 Display.py image logout')
   while True:
     if pi.read(13) == 1:
       return True

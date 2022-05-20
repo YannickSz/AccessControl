@@ -15,6 +15,8 @@ if sys.argv[1] == 'image':
         image = Image.open("images/denied.png")
     elif sys.argv[2]=='loading':
         image = Image.open("images/loading.png")
+    elif sys.argv[2]=='logout':
+        image = Image.open("images/logout.png")
     else:
         image = Image.open("images/error.png")
     display.display(image)
