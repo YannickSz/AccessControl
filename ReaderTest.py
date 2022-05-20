@@ -16,13 +16,13 @@ pi = pigpio.pi()
 
 # gpio 13 left
 # gpio 19 right
-def log_out():
+def wantToLogOut():
   os.system('python3 Display.py text Goodbye Goodbye')
   while True:
     if pi.read(13) == 1:
-      return "accept"
+      return True
     if pi.read(19) == 1:
-      return "cancel"
+      return False
     t.sleep(0.01)
 
 while True:
@@ -42,7 +42,7 @@ while True:
         delta = datetime.datetime.now() - time
         seconds = int(delta.total_seconds())
         if seconds >= 30:
-          if log_out() == "cancel":
+          if wantToLogOut() == False:
             continue
           response = requests.post(urlLogin, data = json.dumps({"rfid":str(uid), "macAddress":str(mac)}), headers = headers)
           if response.status_code == 200:
